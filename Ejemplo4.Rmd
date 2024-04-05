@@ -1,0 +1,59 @@
+---
+title: "Ejemplo 4"
+output: ioslides_presentation
+date: "2024-04-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Ejemplo 4. Lectura de archivos JSON, XML y tablas en HTML
+
+#### Objetivo
+- Realizar lectura de archivos JSON y XML para poder aplicar las funciones que se requieran de `R` y poder extraer información convirtiéndola en un data frame
+
+#### Requisitos
+- librería `rvest``
+
+#### Desarrollo
+
+## Tablas en HTML 
+
+Comenzamos instalando el paquete `rvest` el cual nos permitirá realizar la lectura de la tabla en el HTML
+
+```{r}
+#install.packages("rvest")
+library(rvest)
+```
+Introducimos una dirección URL donde se encuentre una tabla
+
+```{r}
+theurl <- "https://solarviews.com/span/data2.htm"
+file <- read_html(theurl)    # Leemos el html
+```
+Selecciona pedazos dentro del HTML para identificar la tabla
+```{r}
+tables <- html_nodes(file, "table")  
+```
+Hay que analizar 'tables' para determinar cual es la posición en la lista que contiene la tabla, en este caso es la no. 4 
+
+Extraemos la tabla de acuerdo a la posición en la lista
+```{r}
+table1 <- html_table(tables[4], fill = TRUE) %>% as.data.frame()
+
+table <- na.omit(as.data.frame(table1))   # Quitamos NA´s que meten filas extras y convertimos la lista en un data frame para su manipulación con R
+
+str(table)  # Vemos la naturaleza de las variables
+```
+
+```{r}
+head(table)
+```
+
+Por último realizamos una conversión de una columna tipo `chr` a `num`, se pueden hacer las conversiones que se requieran
+
+```{r}
+table$Albedo <- as.numeric(table$Albedo)
+str(table)
+```

@@ -8,7 +8,7 @@ date: "2024-04-05"
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Ejemplo 4. Lectura de archivos JSON, XML y tablas en HTML
+## Ejemplo 4. Lectura de archivos JSON, XML y tablas en HTML
 
 #### Objetivo
 - Realizar lectura de archivos JSON y XML para poder aplicar las funciones que se requieran de `R` y poder extraer información convirtiéndola en un data frame
